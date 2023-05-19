@@ -5,7 +5,7 @@ import {Homepage} from "./pages/Homepage";
 import {Login} from "./pages/Login";
 import {Signin} from "./pages/Signin";
 import { NotFound } from "./pages/NotFound";
-
+import {Cart} from "./pages/Cart";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +15,7 @@ function App() {
         <Route path="/" element={<Homepage/>}/>
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signin" element={<Signin/>}/>
+        <Route path="/Cart" element={<Cart/>}/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>

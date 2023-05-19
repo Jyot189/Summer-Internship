@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import {MdLocalGroceryStore} from 'react-icons/md'
 export const Navbar=()=>{
     // return (<div>signin page</div>);
    return( 
@@ -9,16 +10,19 @@ export const Navbar=()=>{
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                {/* <li class="nav-item active">
                     <Link to="/" class="nav-link">Home <span class="sr-only"></span></Link>
-                </li>
+                </li> */}
                 <li class="nav-item">
                     <Link to="/Login" class="nav-link">Login <span class="sr-only"></span></Link>
                 </li>
                 <li class="nav-item">
                     <Link to="/Signin" class="nav-link">signin <span class="sr-only"></span></Link>
+                </li>
+                <li class="nav-item">
+                    <Link to="/Cart" class="nav-link"><MdLocalGroceryStore/> <span class="sr-only"></span></Link>
                 </li>
                 </ul>
             </div>
