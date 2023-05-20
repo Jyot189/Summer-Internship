@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 export const Login =()=>{
     return (
         <div class="h-400 mt-4 d-flex align-items-center justify-content-center">
@@ -38,7 +39,7 @@ export const Login =()=>{
             <input class="btn btn-primary btn-block mb-4" type="submit" value="Sign in" />
             
             <div class="text-center">
-                <p>Not a member? <a href="#!">Register</a></p>
+                <p>Not a member?<Link to="/Signin" class="nav-link">Register <span class="sr-only"></span></Link></p>
                 <p>or sign up with:</p>
                 <button type="button" class="btn btn-link btn-floating mx-1">
                 <i class="fab fa-facebook-f"></i>
