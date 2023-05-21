@@ -1,3 +1,10 @@
+import {Search} from "../components/Search";
 export const Cart =()=>{
-    return (<h1>Cart</h1>);
+    return (
+        <>
+            <Search/>
+            <h1>Cart</h1>
+        </>
+        
+    );
 };

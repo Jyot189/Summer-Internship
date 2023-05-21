@@ -1,11 +1,14 @@
 import {Link} from "react-router-dom";
 import {MdLocalGroceryStore} from 'react-icons/md'
+
 export const Navbar=()=>{
+    console.log(process.env.REACT_APP_HOSTED_URL)
     // return (<div>signin page</div>);
    return( 
     <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to="#" class="navbar-brand" >Tatvasoft</Link>
+            <img src={`${process.env.REACT_APP_HOSTED_URL}site-logo.png`} alt="logo" width="40" height="50"/>
+            <Link to="#" class="navbar-brand ml-2" >Tatvasoft</Link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

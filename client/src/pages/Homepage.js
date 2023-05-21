@@ -1,3 +1,9 @@
+import {Search} from "../components/Search";
 export const Homepage =()=>{
-    return (<h1>Homepage</h1>);
+    return (
+        <>
+            <Search/>
+            <h1>Homepage</h1>
+        </>
+    );
 };
