@@ -18,26 +18,37 @@ import {
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ValidationErrorMessage from "../../components/ValidationErrorMessage/index";
+import authService from "../../service/auth.service";
 import { StatusCode } from "./../../constant/constant";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CreateUserModel } from "../../models/AuthModel";
 import { Role } from "../../utils/enum";
+import RoleModel from "../../models/RoleModel";
 import { materialCommonStyles } from "../../utils/materialCommonStyles";
+import BaseList from "../../models/BaseList";
+import userService from "../../service/user.service";
 
-
-const Register= () => {
+const Register: React.FC = () => {
   const classes = createAccountStyle();
   const materialClasses = materialCommonStyles();
   const history = useHistory();
+  const initialValues: CreateUserModel = new CreateUserModel();
+  const [roleList, setRoleList] = useState<RoleModel[]>([]);
 
   useEffect(() => {
     getRoles();
   }, []);
 
   const getRoles = (): void => {
-    
-    };
-  
+    userService.getAllRoles().then((res: BaseList<RoleModel[]>) => {
+      if (res.records.length) {
+        setRoleList(
+          res.records.filter((role: RoleModel) => role.id !== Role.Admin)
+        );
+      }
+    });
+  };
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -57,9 +68,14 @@ const Register= () => {
     roleId: Yup.number().required("Role is required"),
   });
 
-  
+  const onSubmit = (data: CreateUserModel): void => {
+    authService.create(data).then((res) => {
+      history.push("/login");
+      toast.success("Successfully registered");
+    });
+  };
   return (
-    <div >
+    <div className={classes.createAccountWrapper}>
       <div className="create-account-page-wrapper">
         <div className="container">
           <Breadcrumbs
@@ -75,9 +91,20 @@ const Register= () => {
 
           <Typography variant="h1">Login or Create an Account</Typography>
           <div className="create-account-row">
-            
-              
-                <form >
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onSubmit}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                handleBlur,
+                handleChange,
+                handleSubmit,
+              }) => (
+                <form onSubmit={handleSubmit}>
                   <div className="form-block">
                     <div className="personal-information">
                       <Typography variant="h2">Personal Information</Typography>
@@ -93,31 +120,43 @@ const Register= () => {
                             label="First Name *"
                             variant="outlined"
                             inputProps={{ className: "small" }}
-                            
+                            onBlur={handleBlur}
+                            onChange={handleChange}
                           />
-                          
+                          <ValidationErrorMessage
+                            message={errors.firstName}
+                            touched={touched.firstName}
+                          />
                         </div>
                         <div className="form-col">
                           <TextField
-                            
+                            onBlur={handleBlur}
+                            onChange={handleChange}
                             id="last-name"
                             name="lastName"
                             label="Last Name *"
                             variant="outlined"
                             inputProps={{ className: "small" }}
                           />
-                          
+                          <ValidationErrorMessage
+                            message={errors.lastName}
+                            touched={touched.lastName}
+                          />
                         </div>
                         <div className="form-col">
                           <TextField
-                            
+                            onBlur={handleBlur}
+                            onChange={handleChange}
                             id="email"
                             name="email"
                             label="Email Address *"
                             variant="outlined"
                             inputProps={{ className: "small" }}
                           />
-                          
+                          <ValidationErrorMessage
+                            message={errors.email}
+                            touched={touched.email}
+                          />
                         </div>
                         <div className="form-col">
                           <FormControl
@@ -125,7 +164,29 @@ const Register= () => {
                             variant="outlined"
                           >
                             <InputLabel htmlFor="select">Roles</InputLabel>
-                            
+                            <Select
+                              name="roleId"
+                              id={"roleId"}
+                              inputProps={{ className: "small" }}
+                              onChange={handleChange}
+                              className={materialClasses.customSelect}
+                              MenuProps={{
+                                classes: {
+                                  paper: materialClasses.customSelect,
+                                },
+                              }}
+                              value={values.roleId}
+                            >
+                              {roleList.length > 0 &&
+                                roleList.map((role: RoleModel) => (
+                                  <MenuItem
+                                    value={role.id}
+                                    key={"name" + role.id}
+                                  >
+                                    {role.name}
+                                  </MenuItem>
+                                ))}
+                            </Select>
                           </FormControl>
                         </div>
                       </div>
@@ -136,7 +197,8 @@ const Register= () => {
                       <div className="form-row-wrapper">
                         <div className="form-col">
                           <TextField
-                            
+                            onBlur={handleBlur}
+                            onChange={handleChange}
                             id="password"
                             type="password"
                             name="password"
@@ -144,18 +206,26 @@ const Register= () => {
                             variant="outlined"
                             inputProps={{ className: "small" }}
                           />
-                          
+                          <ValidationErrorMessage
+                            message={errors.password}
+                            touched={touched.password}
+                          />
                         </div>
                         <div className="form-col">
                           <TextField
                             type="password"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
                             id="confirm-password"
                             name="confirmPassword"
                             label="Confirm Password *"
                             variant="outlined"
                             inputProps={{ className: "small" }}
                           />
-                          
+                          <ValidationErrorMessage
+                            message={errors.confirmPassword}
+                            touched={touched.confirmPassword}
+                          />
                         </div>
                       </div>
                       <div className="btn-wrapper">
@@ -172,11 +242,13 @@ const Register= () => {
                     </div>
                   </div>
                 </form>
-            
+              )}
+            </Formik>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default Register;

@@ -13,13 +13,16 @@ import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import ValidationErrorMessage from "../../components/ValidationErrorMessage";
+import authService from "../../service/auth.service";
 import { toast } from "react-toastify";
-
+import { LoginModel } from "../../models/AuthModel";
+import { useAuthContext } from "../../context/auth";
 
 const Login: React.FC = () => {
 	const classes = loginStyle();
 	const history = useHistory();
-	
+	const authContext = useAuthContext();
+	const initialValues: LoginModel = new LoginModel();
 
 	const validationSchema = Yup.object().shape({
 		email: Yup.string()
@@ -30,7 +33,13 @@ const Login: React.FC = () => {
 			.required("Password is required"),
 	});
 
-	
+	const onSubmit = (values: LoginModel): void => {
+		authService.login(values).then((res) => {
+			authContext.setUser(res);
+			history.push("/");
+			toast.success("Successfully logged in");
+		});
+	};
 	return (
 		<div className={classes.loginWrapper}>
 			<div className="login-page-wrapper">
@@ -74,22 +83,35 @@ const Login: React.FC = () => {
 						<div className="form-block">
 							<Typography variant="h2">Registered Customers</Typography>
 							<p>If you have an account with us, please log in.</p>
-							
-								
-									<form >
+							<Formik
+								initialValues={initialValues}
+								validationSchema={validationSchema}
+								onSubmit={onSubmit}
+							>
+								{({
+									values,
+									errors,
+									touched,
+									handleBlur,
+									handleChange,
+									handleSubmit,
+								}) => (
+									<form onSubmit={handleSubmit}>
 										<div className="form-row-wrapper">
 											<div className="form-col">
 												<TextField
 													id="email"
 													name="email"
-													
+													onBlur={handleBlur}
+													onChange={handleChange}
 													label="Email Address *"
 													autoComplete="off"
 													variant="outlined"
 													inputProps={{ className: "small" }}
 												/>
 												<ValidationErrorMessage
-													
+													message={errors.email}
+													touched={touched.email}
 												/>
 											</div>
 											<div className="form-col">
@@ -99,13 +121,14 @@ const Login: React.FC = () => {
 													label="Password *"
 													type="password"
 													variant="outlined"
-													
+													onBlur={handleBlur}
+													onChange={handleChange}
 													inputProps={{ className: "small" }}
 													autoComplete="off"
 												/>
 												<ValidationErrorMessage
-													// message={errors.password}
-													// touched={touched.password}
+													message={errors.password}
+													touched={touched.password}
 												/>
 											</div>
 											<div className="btn-wrapper">
@@ -121,7 +144,8 @@ const Login: React.FC = () => {
 											</div>
 										</div>
 									</form>
-								
+								)}
+							</Formik>
 						</div>
 					</div>
 				</div>

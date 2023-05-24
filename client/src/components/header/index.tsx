@@ -29,44 +29,6 @@ const Header: React.FC = () => {
 		document.body.classList.toggle("open-menu");
 	};
 
-	
-
-	
-
-	// const getBooks = async () => {
-	// 	const res = await bookService.getAll({
-	// 		pageIndex: 1,
-	// 		pageSize: 10,
-	// 		keyword: query,
-	// 	});
-	// 	setLoading(false);
-	// 	setbookList(res.records);
-	// };
-
-	// const search = () => {
-	// 	setLoading(true);
-	// 	document.body.classList.add("search-results-open");
-	// 	getBooks();
-	// 	setOpenSearchResult(true);
-	// };
-
-	// const addToCart = (book: BookModel): void => {
-	// 	if (!authContext.user.id) {
-	// 		toast.error("Please login before adding books to cart");
-	// 		history.push(RoutePaths.Register);
-	// 		return;
-	// 	} else {
-	// 		Shared.addToCart(book, authContext.user.id).then((res) => {
-	// 			if (res.error) {
-	// 				toast.error(res.message);
-	// 			} else {
-	// 				toast.success(res.message);
-	// 				cartContext.updateCart();
-	// 			}
-	// 		});
-	// 	}
-	// };
-
 	return (
 		<div className={classes.headerWrapper}>
 			<AppBar className="site-header" id="header" position="static">
