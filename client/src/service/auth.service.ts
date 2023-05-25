@@ -3,7 +3,7 @@ import UserModel from "../models/UserModel";
 import request from "./request";
 
 class AuthService {
-    ENDPOINT = 'api/BookStore';
+    ENDPOINT = 'api/user';
 
     public async login(data: LoginModel): Promise<UserModel> {
         const url = `${this.ENDPOINT}/Login`;

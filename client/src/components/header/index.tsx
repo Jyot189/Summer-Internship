@@ -74,9 +74,7 @@ const Header: React.FC = () => {
 										<ListItem className="hamburger" onClick={openMenu}>
 											<span></span>
 										</ListItem>
-									</List>
-
-									
+									</List>									
 								</div>
 							</div>
 						</div>

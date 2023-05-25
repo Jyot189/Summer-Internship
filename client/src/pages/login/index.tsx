@@ -34,6 +34,7 @@ const Login: React.FC = () => {
 	});
 
 	const onSubmit = (values: LoginModel): void => {
+		// history.push("/");
 		authService.login(values).then((res) => {
 			authContext.setUser(res);
 			history.push("/");

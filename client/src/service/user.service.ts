@@ -5,7 +5,7 @@ import BaseList from "../models/BaseList";
 import UserModel, { AddOrEditUserModel } from "../models/UserModel";
 
 class AuthService {
-  ENDPOINT = "api/User";
+  ENDPOINT = "api/user";
 
   public async getAllUsers(params: FilterModel): Promise<BaseList<UserModel[]>> {
     const url = `${this.ENDPOINT}/list`;

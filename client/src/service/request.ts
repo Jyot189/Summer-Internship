@@ -2,10 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const request = axios.create({
-	//  baseURL: "https://web1.anasource.com/BookStore/api/BookStore/", // url = base url + request url
-	// baseURL: 'https://localhost:44394/',
-	baseURL: "https://helperland1.azurewebsites.net/",
-	//  baseURL: "http://192.168.1.20/",
+	baseURL: "https://book-e-sell-node-api.vercel.app/",
 	timeout: 12400000,
 	responseType: "json",
 });
