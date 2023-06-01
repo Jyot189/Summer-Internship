@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
                 </Link>
               </div>
               <p className="copyright-text">
-                © 2023 Tatvasoft.com. All rights reserved.
+                © 2023 Tatvasoft.com. All rights reserved by jyot khant.
               </p>
             </div>
           </div>
